@@ -1,0 +1,30 @@
+GET http://localhost:3000/users
+
+
+###
+GET http://localhost:3000/users/3
+
+
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "John Doe2",
+    "email": "johndoe@mail.com",
+    "chatId": "1234567890",
+}
+
+### 
+PUT http://localhost:3000/users/3
+Content-Type: application/json
+
+{
+    "name": "Joe Biden",
+    "email": "afafaaf@gmail.com",
+    "chatId": "1234567890"
+}
+
+###
+GET http://localhost:3000/events
