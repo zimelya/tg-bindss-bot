@@ -13,7 +13,7 @@ Content-Type: application/json
 {
     "name": "John Doe2",
     "email": "johndoe@mail.com",
-    "chatId": "1234567890",
+    "chatId": "1234567890"
 }
 
 ### 
