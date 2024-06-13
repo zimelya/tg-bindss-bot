@@ -1,12 +1,45 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, UsePipes } from '@nestjs/common';
 import { EventsService } from './events.service';
+import { ZodValidationPipe } from 'src/common/pipe/validation.pipe';
+import { CreateEventDto, CreateEventSchema } from './event.dto';
+import { EventStatus } from 'src/common-types';
 
 @Controller('events')
 export class EventsController {
-  constructor(private readonly eventsService: EventsService) {}
+  constructor(readonly eventsService: EventsService) {}
 
   @Get()
   async findAll() {
     return this.eventsService.findAll();
   }
+
+  @Get(':id')
+  async findOne(@Param('id', ParseIntPipe) id: number){
+    return await this.eventsService.findOne(id);
+  }
+
+  @Post()
+  @UsePipes(new ZodValidationPipe(CreateEventSchema)) 
+  async createEvent(@Body() createEventDto: CreateEventDto){
+    console.log(createEventDto );
+    return await  this.eventsService.create(createEventDto);
+  }
+
+  @Put(':id')
+  async updateEvent(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(new ZodValidationPipe(CreateEventSchema)) createEventDto: CreateEventDto,
+  ){
+    return await this.eventsService.update(id, createEventDto)
+  }
+
+  @Put(':id')
+  async updateEventStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(new ZodValidationPipe(CreateEventSchema)) status: EventStatus,
+  ){
+    return await this.eventsService.updateStatus(id, status)
+  }
+
+
 }

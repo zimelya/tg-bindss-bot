@@ -11,9 +11,9 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "name": "John Doe2",
-    "email": "johndoe@mail.com",
-    "chatId": "1234567890"
+    "name": "Jony be Good2",
+    "email": "johndjonyoe@mail.com",
+    "chatId": "1234567300"
 }
 
 ### 
@@ -28,3 +28,25 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3000/events
+
+###
+POST http://localhost:3000/events
+Content-Type: application/json
+
+{
+    "title": "Some Event 213",
+    "date": "2024-09-26T07:58:30.996+0200"
+}
+###
+POST http://localhost:3000/events
+Content-Type: application/json
+
+{
+    "title": "Some Event 22223",
+    "date": "2024-09-26T07:58:30Z",
+    "status": "PENDING",
+    "data": {
+        "media": "media path",
+        "mediatype": "sequence"
+    }
+}
