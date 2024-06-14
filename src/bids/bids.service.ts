@@ -1,11 +1,24 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma.service';
+import { CreateBidDto } from './bid.schema';
 
 @Injectable()
 export class BidsService {
-    findOne(id: number) {
-        throw new Error('Method not implemented.');
+
+    constructor(private prisma: PrismaService){}
+
+    findAll(){
+        return this.prisma.bid.findMany()
     }
-    findAll() {
-        throw new Error('Method not implemented.');
+
+    findOne(id: number){
+        return this,this.prisma.bid.findUnique({
+            where: { id }
+        })
     }
+
+    create(data: CreateBidDto){
+        return this.prisma.bid.create({ data })
+    }
+
 }

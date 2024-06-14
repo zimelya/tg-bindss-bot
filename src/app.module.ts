@@ -5,11 +5,15 @@ import { UsersModule } from './users/users.module';
 import { EventsModule } from './events/events.module';
 import { BidsController } from './bids/bids.controller';
 import { BidsService } from './bids/bids.service';
+import { BidsController } from './bids/bids.controller';
+import { AuctionsController } from './auctions/auctions.controller';
 import { BidsModule } from './bids/bids.module';
+import { AuctionsService } from './auctions/auctions.service';
+import { BidsService } from './bids/bids.service';
 
 @Module({
   imports: [UsersModule, EventsModule, BidsModule],
-  controllers: [AppController, BidsController],
-  providers: [AppService, BidsService],
+  controllers: [AppController, BidsController, AuctionsController],
+  providers: [AppService, BidsService, AuctionsService],
 })
 export class AppModule {}

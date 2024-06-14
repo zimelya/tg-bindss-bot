@@ -3,6 +3,7 @@ import { EventsService } from './events.service';
 import { ZodValidationPipe } from 'src/common/pipe/validation.pipe';
 import { CreateEventDto, CreateEventSchema } from './event.dto';
 import { EventStatus } from 'src/common-types';
+import { Bids } from '@prisma/client';
 
 @Controller('events')
 export class EventsController {
@@ -41,5 +42,11 @@ export class EventsController {
     return await this.eventsService.updateStatus(id, status)
   }
 
-
+  @Post(':id')
+  async updateEventBid(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(new ZodValidationPipe(CreateEventSchema)) bid: Bids
+  ){
+    return await this.eventsService.addBid(id, bid)
+  }
 }
