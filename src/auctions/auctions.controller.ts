@@ -1,7 +1,10 @@
-import { Body, Controller, Get, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, ParseIntPipe, Post, Put, UsePipes } from '@nestjs/common';
 import { AuctionsService } from './auctions.service';
-import { CreateAuctionSchema } from './auction.shema';
+import { CreateAuctionDto, CreateAuctionSchema } from './auction.shema';
 import { Auction } from '@prisma/client';
+import { error } from 'console';
+import { ZodValidationPipe } from 'src/common/pipe/validation.pipe';
+import { CreateBidDto, CreateBidSchema } from 'src/bids/bid.schema';
 
 @Controller('auctions')
 export class AuctionsController {
@@ -19,11 +22,22 @@ export class AuctionsController {
     }
 
     @Post()
-    async create(@Body() body: unknown): Promise<Auction>{
-        const data = CreateAuctionSchema.parse(body)
+    @UsePipes(new ZodValidationPipe(CreateAuctionSchema))
+    async create(@Body() data: CreateAuctionDto){  
         if(data){
             return this.auctionsService.create(data)
         }
-        
+    }
+
+    @Put(':id/bid')
+    @UsePipes(new ZodValidationPipe(CreateBidSchema) )
+    async placeBid(
+        @Param('id', ParseIntPipe) id: number, 
+        @Body() data: CreateBidDto){
+            return this.auctionsService.placeBid({
+                auctionId: id,
+                userId: data.userId,
+                amount: data.amount
+            })
     }
 }
