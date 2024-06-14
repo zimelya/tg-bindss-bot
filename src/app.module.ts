@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
-import { EventsModule } from './events/events.module';
+// import { EventsModule } from './events/events.module';
 import { BidsController } from './bids/bids.controller';
 import { BidsService } from './bids/bids.service';
 // import { BidsController } from './bids/bids.controller';
@@ -13,7 +13,7 @@ import { PrismaModule } from './prisma.module';
 // import { BidsService } from './bids/bids.service';
 
 @Module({
-  imports: [UsersModule, EventsModule, PrismaModule],
+  imports: [UsersModule, PrismaModule],
   controllers: [AppController, BidsController, AuctionsController],
   providers: [AppService, BidsService, AuctionsService],
 })

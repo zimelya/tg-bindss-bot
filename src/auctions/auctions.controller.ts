@@ -30,10 +30,13 @@ export class AuctionsController {
     }
 
     @Put(':id/bid')
-    @UsePipes(new ZodValidationPipe(CreateBidSchema) )
+    // @UsePipes(new ZodValidationPipe(CreateBidSchema) )
     async placeBid(
         @Param('id', ParseIntPipe) id: number, 
-        @Body() data: CreateBidDto){
+        @Body() body: any){
+           
+            const data = CreateBidSchema.parse(body);
+            if(!data){ return console.error("what is data")}
             return this.auctionsService.placeBid({
                 auctionId: id,
                 userId: data.userId,

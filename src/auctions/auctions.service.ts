@@ -25,6 +25,7 @@ export class AuctionsService {
     }
 
     async placeBid(data: CreateBidDto){
+        console.log("data", data);
         const bid = await this.prisma.bid.create({ data });
 
         await this.prisma.auction.update({
