@@ -4,21 +4,22 @@ import { CreateBidDto } from './bid.schema';
 
 @Injectable()
 export class BidsService {
+  constructor(private prisma: PrismaService) {}
 
-    constructor(private prisma: PrismaService){}
+  findAll() {
+    return this.prisma.bid.findMany();
+  }
 
-    findAll(){
-        return this.prisma.bid.findMany()
-    }
+  findOne(id: number) {
+    return (
+      this,
+      this.prisma.bid.findUnique({
+        where: { id },
+      })
+    );
+  }
 
-    findOne(id: number){
-        return this,this.prisma.bid.findUnique({
-            where: { id }
-        })
-    }
-
-    create(data: CreateBidDto){
-        return this.prisma.bid.create({ data })
-    }
-
+  create(data: CreateBidDto) {
+    return this.prisma.bid.create({ data });
+  }
 }
