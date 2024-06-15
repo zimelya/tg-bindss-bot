@@ -34,18 +34,19 @@ POST http://localhost:3000/auctions
 Content-Type: application/json
 
 {
-    "title": "Some Event 7845",
-    "startPrice": 123.56,
+    "title": "Some Event 78225",
+    "startPrice": 455.56,
     "startTime": "2024-09-26T15:58:30Z",
     "endTime": "2024-09-26T18:58:30Z"
     
 }
 
 ###
-PUT http://localhost:3000/auctions/1/bid
+POST http://localhost:3000/auctions/1/bid
 Content-Type: application/json
 
 {
+    "auctionId": 1,
     "userId": 1,
     "amount": 20.5
     

@@ -10,6 +10,7 @@ export class AuctionsService {
     constructor(private prisma: PrismaService){}
 
     findAll() {
+        console.log("HOBA");
         return this.prisma.auction.findMany({ include: {bids: true}})
     }
 
@@ -25,8 +26,9 @@ export class AuctionsService {
     }
 
     async placeBid(data: CreateBidDto){
-        console.log("data", data);
-        const bid = await this.prisma.bid.create({ data });
+        
+        console.log("HOBA", data);
+        const bid = await this.prisma.bid.create( {data} );
 
         await this.prisma.auction.update({
             where: { id: data.auctionId },

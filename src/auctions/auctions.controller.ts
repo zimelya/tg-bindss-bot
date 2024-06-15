@@ -29,18 +29,21 @@ export class AuctionsController {
         }
     }
 
-    @Put(':id/bid')
-    // @UsePipes(new ZodValidationPipe(CreateBidSchema) )
+    @Post(':id/bid')
+    @UsePipes(new ZodValidationPipe(CreateBidSchema) )
     async placeBid(
-        @Param('id', ParseIntPipe) id: number, 
-        @Body() body: any){
+        @Body() data: CreateBidDto){
            
-            const data = CreateBidSchema.parse(body);
-            if(!data){ return console.error("what is data")}
-            return this.auctionsService.placeBid({
-                auctionId: id,
-                userId: data.userId,
-                amount: data.amount
-            })
+            // const data = CreateBidSchema.parse(body);
+
+            // if(!data){  
+            //     console.error("what is data");
+            //     return 
+            // }
+
+            if(data){
+                console.log("con data", data)
+                return this.auctionsService.placeBid(data)
+            }
     }
 }
