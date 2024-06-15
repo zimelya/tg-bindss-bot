@@ -33,16 +33,9 @@ export class AuctionsController {
     @UsePipes(new ZodValidationPipe(CreateBidSchema) )
     async placeBid(
         @Body() data: CreateBidDto){
-           
-            // const data = CreateBidSchema.parse(body);
-
-            // if(!data){  
-            //     console.error("what is data");
-            //     return 
-            // }
 
             if(data){
-                console.log("con data", data)
+                
                 return this.auctionsService.placeBid(data)
             }
     }
