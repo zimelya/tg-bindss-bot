@@ -1,9 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Module } from '@nestjs/common';
 import { Socket } from 'socket.io';
 import { Message } from './ws-events.types';
 
+import { BidsService } from '../bids/bids.service'
+import { GetBidsShema } from 'src/bids/bid.schema';
+
+@Module({
+  imports: [BidsService]
+})
 @Injectable()
 export class WsEventsService {
+  [x: string]: any;
+
+  // constructor(private readonly bidsService: BidsService) {}
+  
   #clients: Socket[] = [];
 
   addClient(client: Socket): void {
@@ -25,4 +35,12 @@ export class WsEventsService {
       client.emit('message', message);
     });
   }
+  broadcastBidsList(data: GetBidsShema) {
+    const bids = this.bidsService.getBids(data);
+    this.#clients.forEach((client) => {
+      client.emit('bidsList', bids)
+    });
+  }
+
+
 }

@@ -16,8 +16,9 @@ export class AuctionsController {
         return this.auctionsService.findAll();
     }
 
-    @Get('id')
+    @Get(':id')
     async findOne(@Param('id', ParseIntPipe) id: number){
+        console.log("id", id);
         return this.auctionsService.findOne(id)
     }
 

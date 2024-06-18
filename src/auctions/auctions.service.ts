@@ -10,11 +10,10 @@ export class AuctionsService {
     constructor(private prisma: PrismaService){}
 
     findAll() {
-        console.log("HOBA");
         return this.prisma.auction.findMany({ include: {bids: true}})
     }
 
-    findOne(id: number){
+    findOne(id: number):Promise<Auction | null>{
         return this.prisma.auction.findUnique({
             where: {id},
             include: { bids: true }

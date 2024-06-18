@@ -30,6 +30,9 @@ Content-Type: application/json
 GET http://localhost:3000/auctions
 
 ###
+GET http://localhost:3000/auctions/2
+
+###
 POST http://localhost:3000/auctions
 Content-Type: application/json
 
@@ -42,12 +45,38 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/auctions/1/bid
+POST http://localhost:3000/auctions/3/bid
+Content-Type: application/json
+
+{
+    "auctionId": 3,
+    "userId": 1,
+    "amount": 30.5
+    
+}
+
+###
+GET http://localhost:3000/bids
+Content-Type: application/json
+
+{
+    "userId": 2,
+    "count": 3
+    
+}
+
+###
+GET http://localhost:3000/bids
 Content-Type: application/json
 
 {
     "auctionId": 1,
-    "userId": 1,
-    "amount": 20.5
+    "count": 5
     
 }
+
+###
+GET http://localhost:3000/bids
+Content-Type: application/json
+
+{ }
