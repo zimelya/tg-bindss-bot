@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { CreateAuctionDto } from './auction.shema';
 import { CreateBidDto } from 'src/bids/bid.schema';
-import { Auction } from '@prisma/client';
+import { Auction, Bid } from '@prisma/client';
 
 @Injectable()
 export class AuctionsService {
@@ -24,9 +24,9 @@ export class AuctionsService {
         return this.prisma.auction.create({ data })
     }
 
-    async placeBid(data: CreateBidDto){
+    async placeBid(data: CreateBidDto): Promise<Bid>{
         
-        const bid = await this.prisma.bid.create( {data} );
+        const bid = await this.prisma.bid.create({data} );
 
         await this.prisma.auction.update({
             where: { id: data.auctionId },

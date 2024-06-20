@@ -1,3 +1,4 @@
+import { Auction } from '@prisma/client';
 import { z } from 'zod';
 
 export const CreateBidSchema = z.object({
@@ -5,12 +6,17 @@ export const CreateBidSchema = z.object({
     userId: z.number().int().positive(),
     amount: z.number().positive(),
 });
-
-export type CreateBidDto = z.infer<typeof CreateBidSchema> & {
+export type CreateBidDto = {
     auctionId: number;
     userId: number;
     amount: number;
 }
+
+// export type CreateBidDto = z.infer<typeof CreateBidSchema> & {
+//     auctionId: number;
+//     userId: number;
+//     amount: number;
+// }
 
 export const GetBidsSchema = z.object({
     auctionId: z.number().int().positive().optional(),
@@ -18,4 +24,5 @@ export const GetBidsSchema = z.object({
     count: z.number().int().positive().optional(),
 });
 
-export type GetBidsShema = z.infer<typeof GetBidsSchema> ;
+export type GetBidsDto = z.infer<typeof GetBidsSchema>;
+
