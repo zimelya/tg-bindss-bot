@@ -37,22 +37,21 @@ export class WsEventsGateway {
   async handleBid(
     @MessageBody() bidData: any,
     @ConnectedSocket() client: Socket,
-
   ): Promise<void> {
     try {
 
-      const parsedData = GetBidsSchema.safeParse(bidData);
-      if (!parsedData.success) {
-        console.error('Validation error:', parsedData.error);
-        client.emit('error', { message: 'Invalid bid data' });
-        return;
-      }
+      const parsedData = GetBidsSchema.parse(bidData);
+      // if (!parsedData.success) {
+      //   console.error('Validation error:', parsedData.error);
+      //   client.emit('error', { message: 'Invalid bid data' });
+      //   return;
+      // }
 
-      const validatedData = parsedData.data;
-      console.log('Received bids from', client.id, validatedData);
+      // const validatedData = parsedData;
+      console.log('Received bids from', client.id, parsedData);
 
       // await this.eventService.writeBid(parsedData.data);
-      await this.eventService.broadcastBidsList(validatedData);
+      await this.eventService.broadcastBidsList(parsedData);
     } catch (e) {
       console.error("Get bid data error", e);
     }
@@ -64,19 +63,10 @@ export class WsEventsGateway {
     @ConnectedSocket() client: Socket,
   ): Promise<void> {
     try {
-      const parsedData = CreateBidSchema.safeParse(bidData);
-      if (!parsedData.success) {
-        console.error('Validation error:', parsedData.error);
-        client.emit('error', { message: 'Invalid bid data' });
-        return;
-      }
-      if(parsedData.data){
-        const validatedData: CreateBidDto = bidData;
-        console.log("HOBA", validatedData);
-        await this.eventService.createBid(validatedData);
-        console.log("Bid created", validatedData);
-      }
-      
+      const parsedData = CreateBidSchema.parse(bidData);
+      await this.eventService.createBid(parsedData);
+      client.emit('bidUpSuccess', { })
+
     } catch (e) {
       client.emit("error", { message: "some error", e })
       console.error("UpBid error")

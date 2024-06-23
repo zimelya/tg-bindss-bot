@@ -42,7 +42,11 @@ export class BidsService {
 
     async create(data: CreateBidDto) {
         try {
-          const newBid = await this.prisma.bid.create({ data });
+          const newBid = await this.prisma.bid.create({ data: {
+            auctionId: data.auctionId ,
+            userId: data.userId,
+            amount: data.amount
+          } });
           return newBid;
         } catch (error) {
           throw new Error('Failed to create bid');
