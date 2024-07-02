@@ -6,13 +6,8 @@ export const CreateAuctionSchema = z.object({
     startTime: z.string().datetime(),
     endTime: z.string().datetime(),
     currentPrice: z.number().positive().optional(),
+    userId: z.number(),
 
-});
+}).required();
 
-export type CreateAuctionDto = z.infer<typeof CreateAuctionSchema> & {
-    title: string;
-    startPrice?: number;
-    startTime: Date;
-    endTime: Date;
-    currentPrice?: number;
-}
+export type CreateAuctionDto = z.infer<typeof CreateAuctionSchema> 

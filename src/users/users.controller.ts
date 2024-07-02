@@ -6,15 +6,19 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ZodValidationPipe } from 'src/common/pipe/validation.pipe';
 import { CreateUserDto, CreateUserSchema } from './users.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(readonly userService: UsersService) {}
+
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {
     return await this.userService.findAll();

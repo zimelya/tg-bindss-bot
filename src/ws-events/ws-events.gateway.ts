@@ -8,7 +8,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { ClientToServerListen, ServerToClientListen } from './ws-events.types';
 import { WsEventsService } from './ws-events.service';
-import { CreateBidDto, CreateBidSchema, GetBidsSchema, GetBidsDto } from 'src/bids/bid.schema';
+import { CreateBidDto, CreateBidSchema, GetBidsSchema, GetBidsDto, BidSchema } from 'src/bids/bid.schema';
 import { ZodParsedType } from 'zod';
 import { ZodValidationPipe } from 'src/common/pipe/validation.pipe';
 import { PipesContextCreator } from '@nestjs/core/pipes';
@@ -40,18 +40,24 @@ export class WsEventsGateway {
   ): Promise<void> {
     try {
 
-      const parsedData = GetBidsSchema.parse(bidData);
-      // if (!parsedData.success) {
-      //   console.error('Validation error:', parsedData.error);
-      //   client.emit('error', { message: 'Invalid bid data' });
-      //   return;
-      // }
+      const parsedData = CreateBidSchema.parse(bidData);
 
-      // const validatedData = parsedData;
+      if (!parsedData) {
+        console.error("Empty ");
+      }
+      const dataCreate = {
+        userId: parsedData.userId,
+        auctionId: parsedData.auctionId,
+        amount: parsedData.amount
+      }
+
+      await this.eventService.createBid(dataCreate);
+      await this.eventService.broadcastBidsList(parsedData);
+
+
       console.log('Received bids from', client.id, parsedData);
 
-      // await this.eventService.writeBid(parsedData.data);
-      await this.eventService.broadcastBidsList(parsedData);
+
     } catch (e) {
       console.error("Get bid data error", e);
     }
@@ -64,8 +70,16 @@ export class WsEventsGateway {
   ): Promise<void> {
     try {
       const parsedData = CreateBidSchema.parse(bidData);
-      await this.eventService.createBid(parsedData);
-      client.emit('bidUpSuccess', { })
+      if (parsedData.amount && parsedData.auctionId && parsedData.userId) {
+        const existData = {
+          amount: parsedData.amount,
+          auctionId: parsedData.auctionId,
+          userId: parsedData.userId
+        }
+        await this.eventService.createBid(existData);
+        client.emit('bidUpSuccess', {})
+      }
+
 
     } catch (e) {
       client.emit("error", { message: "some error", e })
