@@ -16,15 +16,14 @@ export class WsEventsService {
   async createBid(data: CreateBidDto){
     const bid = await this.bidsService.create(data);
     const {auctionId} = data; 
-     this.broadcastBidsList({auctionId, count: 10})
-    
+    this.broadcastBidsList({auctionId, count: 10})
   }
 
   async broadcastBidsList(data: GetBidsDto) {
     const bids = await this.bidsService.getBids(data);
     this.#clients.forEach((client) => {
       try {
-      client.emit('bidsList', bids)
+        client.emit('bidsList', bids)
       } catch(e) {
         console.debug('broadcastBidsList failed for client', client.id)
       }

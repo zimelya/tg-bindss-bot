@@ -24,19 +24,13 @@ export class AuthService {
   async login(userDto: CreateUserDto){
     const validate = await this.validateUser(userDto.phone, userDto.password)
     if(validate){
-      const payload = { username: validate.phone, sub: validate.userId }
+      const payload = { data: validate, sub: validate.userId }
       const token = await this.jwtService.signAsync(payload)
-      return {user: validate, access_token: token}
+      return {token}
     }
     return {error: {message: "invalid request"}}
   }
 
-  // async login(user: any) {
-  //   const payload = { username: user.username, sub: user.id };
-  //   return {
-  //     access_token: this.jwtService.sign(payload),
-  //   };
-  // }
 
   async register(userDto: CreateUserDto) {
     const salt = await bcrypt.genSalt();

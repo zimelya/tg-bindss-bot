@@ -54,9 +54,7 @@ export class WsEventsGateway {
       await this.eventService.createBid(dataCreate);
       await this.eventService.broadcastBidsList(parsedData);
 
-
       console.log('Received bids from', client.id, parsedData);
-
 
     } catch (e) {
       console.error("Get bid data error", e);
@@ -65,25 +63,32 @@ export class WsEventsGateway {
 
   @SubscribeMessage('bidUp')
   async handleBidUp(
-    @MessageBody() bidData: any,
+    @MessageBody() bidData: CreateBidDto,
     @ConnectedSocket() client: Socket,
   ): Promise<void> {
     try {
-      const parsedData = CreateBidSchema.parse(bidData);
-      if (parsedData.amount && parsedData.auctionId && parsedData.userId) {
-        const existData = {
-          amount: parsedData.amount,
-          auctionId: parsedData.auctionId,
-          userId: parsedData.userId
-        }
-        await this.eventService.createBid(existData);
-        client.emit('bidUpSuccess', {})
-      }
+      console.log("in bidData ", bidData)
+      // const parsedData = CreateBidSchema.parse(bidData)
+
+      await this.eventService.createBid(bidData);
+      client.emit('bidUpSuccess', {})
+
+
+
+      // if (parsedData.amount && parsedData.auctionId && parsedData.userId) {
+      //   const existData = {
+      //     amount: parsedData.amount,
+      //     auctionId: parsedData.auctionId,
+      //     userId: parsedData.userId
+      //   }
+      //   await this.eventService.createBid(existData);
+      //   client.emit('bidUpSuccess', {})
+      // }
 
 
     } catch (e) {
       client.emit("error", { message: "some error", e })
-      console.error("UpBid error")
+      console.error("handleBidUp error")
     }
 
   }

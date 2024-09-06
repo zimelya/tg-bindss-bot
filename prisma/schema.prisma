@@ -13,10 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// enum Role {
-//   USER
-//   ADMIN
-// }
+enum ImageType {
+  GALERY
+  SEQUENCE
+}
+
+enum AuctionState {
+  CREATED
+  PENDING
+  ACTIVE
+  FINISHED
+  ARCHIVE
+}
 
 model User {
   id        Int       @id @default(autoincrement())
@@ -29,7 +37,7 @@ model User {
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   role      UserRole  @relation(fields: [roleId], references: [id])
-  roleId    Int @default(1)
+  roleId    Int       @default(1)
   bids      Bid[]
   Auction   Auction[]
 
@@ -37,36 +45,41 @@ model User {
 }
 
 model UserRole {
-  id Int @id @default(autoincrement())
-  name String  @unique
-  users User[]
+  id              Int              @id @default(autoincrement())
+  name            String           @unique
+  users           User[]
   rolePremissions RolePermission[]
 }
 
 model Permission {
-  id Int @id @default(autoincrement())
-  name String @unique
+  id              Int              @id @default(autoincrement())
+  name            String           @unique
   rolePerrmission RolePermission[]
 }
 
 model RolePermission {
-  id Int @id @default(autoincrement())
-  roleId  Int
-  role UserRole @relation(fields: [roleId], references: [id])
-  permissionId  Int
-  permission  Permission @relation(fields: [permissionId], references: [id])
+  id           Int        @id @default(autoincrement())
+  roleId       Int
+  role         UserRole   @relation(fields: [roleId], references: [id])
+  permissionId Int
+  permission   Permission @relation(fields: [permissionId], references: [id])
 }
 
+
 model Auction {
-  id           Int      @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
+  state        AuctionState?  
   title        String
   startPrice   Float?
   currentPrice Float?
   startTime    DateTime
   endTime      DateTime
   bids         Bid[]
-  owner        User     @relation(fields: [userId], references: [id])
+  owner        User      @relation(fields: [userId], references: [id])
   userId       Int
+  imageType    ImageType? 
+  imageURL     String[]
+  primaryImage String?
 }
 
 model Bid {

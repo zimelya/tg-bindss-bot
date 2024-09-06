@@ -14,11 +14,12 @@ import { ZodValidationPipe } from 'src/common/pipe/validation.pipe';
 import { CreateUserDto, CreateUserSchema } from './users.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
   constructor(readonly userService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard)
+  
   @Get()
   async findAll() {
     return await this.userService.findAll();
@@ -41,5 +42,10 @@ export class UsersController {
     @Body(new ZodValidationPipe(CreateUserSchema)) createUserDto: CreateUserDto,
   ) {
     return await this.userService.update(id, createUserDto);
+  }
+
+  @Post()
+  async getUsersPermissions(){
+    return await this.userService.getUserPermisions()
   }
 }

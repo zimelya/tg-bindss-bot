@@ -5,6 +5,20 @@ GET http://localhost:3000/users
 GET http://localhost:3000/users/3
 
 
+###
+POST  http://localhost:3000/auctions/updateimg
+Content-Type: application/json
+
+{
+    "id": 6,
+  "imageType": "GALERY",
+  "images": [
+    "https://tgab-imgstore.s3.eu-north-1.amazonaws.com/img/6/8ddf6a93c78c4ad0be42903b6ba5ada2l0vpIhYh9bM0xN0N-3.png",
+    "https://tgab-imgstore.s3.eu-north-1.amazonaws.com/img/6/8ddf6a93c78c4ad0be42903b6ba5ada2l0vpIhYh9bM0xN0N-4.png",
+    "https://tgab-imgstore.s3.eu-north-1.amazonaws.com/img/6/8ddf6a93c78c4ad0be42903b6ba5ada2l0vpIhYh9bM0xN0N-5.png"
+  ],
+  "primary": "https://tgab-imgstore.s3.eu-north-1.amazonaws.com/img/6/8ddf6a93c78c4ad0be42903b6ba5ada2l0vpIhYh9bM0xN0N-3.png"
+}
 
 ###
 POST http://localhost:3000/users

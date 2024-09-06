@@ -1,7 +1,9 @@
+import { AuctionState } from "@prisma/client";
 import { z } from "zod";
 
 export const CreateAuctionSchema = z.object({
     title: z.string().min(3),
+    state: z.nativeEnum(AuctionState).optional(),
     startPrice: z.number().positive().optional(),
     startTime: z.string().datetime(),
     endTime: z.string().datetime(),
