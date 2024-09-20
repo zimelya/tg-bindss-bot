@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto } from './users.dto';
+import { PermissionDto } from './permissions.dto';
+
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
   findAll(): Promise<User[]> {
-    return this.prisma.user.findMany();
+    return this.prisma.user.findMany()
   }
 
   async findOne(id: number): Promise<User | null> {
@@ -15,13 +17,13 @@ export class UsersService {
       where: {
         id,
       },
-    });
+    })
   }
 
   async create(data: CreateUserDto): Promise<User> {
     return this.prisma.user.create({
       data,
-    });
+    })
   }
 
   async update(
@@ -31,6 +33,10 @@ export class UsersService {
     return this.prisma.user.update({
       where: { id },
       data,
-    });
+    })
+  }
+
+  async getUserPermisions(): Promise<PermissionDto[]> {
+    return this.prisma.permission.findMany()
   }
 }

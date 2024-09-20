@@ -5,15 +5,29 @@ GET http://localhost:3000/users
 GET http://localhost:3000/users/3
 
 
+###
+POST  http://localhost:3000/auctions/updateimg
+Content-Type: application/json
+
+{
+    "id": 6,
+  "imageType": "GALERY",
+  "images": [
+    "https://tgab-imgstore.s3.eu-north-1.amazonaws.com/img/6/8ddf6a93c78c4ad0be42903b6ba5ada2l0vpIhYh9bM0xN0N-3.png",
+    "https://tgab-imgstore.s3.eu-north-1.amazonaws.com/img/6/8ddf6a93c78c4ad0be42903b6ba5ada2l0vpIhYh9bM0xN0N-4.png",
+    "https://tgab-imgstore.s3.eu-north-1.amazonaws.com/img/6/8ddf6a93c78c4ad0be42903b6ba5ada2l0vpIhYh9bM0xN0N-5.png"
+  ],
+  "primary": "https://tgab-imgstore.s3.eu-north-1.amazonaws.com/img/6/8ddf6a93c78c4ad0be42903b6ba5ada2l0vpIhYh9bM0xN0N-3.png"
+}
 
 ###
 POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "name": "John Doe2",
-    "email": "johndoe@mail.com",
-    "chatId": "1234567890",
+    "name": "Jony be Good2",
+    "email": "johndjonyoe@mail.com",
+    "chatId": "1234567300"
 }
 
 ### 
@@ -27,4 +41,50 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/events
+GET http://localhost:3000/auctions
+
+###
+GET http://localhost:3000/auctions/2
+
+###
+POST http://localhost:3000/auctions
+Content-Type: application/json
+
+{
+    "title": "Some Event 78225",
+    "startPrice": 455.56,
+    "startTime": "2024-09-26T15:58:30Z",
+    "endTime": "2024-09-26T18:58:30Z"
+    
+}
+
+
+###
+GET http://localhost:3000/bids/getFew
+Content-Type: application/json
+
+{
+    "userId": 2,
+    "count": 3
+    
+}
+
+###
+POST http://localhost:3000/bids/getFew
+Content-Type: application/json
+
+{
+    "auctionId": 1,
+    "count": 15
+    
+}
+
+###
+POST http://localhost:3000/bids/add
+Content-Type: application/json
+
+{ 
+    "auctionId": 1,
+    "userId": 2,
+    "amount": 150.2
+}
