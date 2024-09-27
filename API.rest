@@ -6,6 +6,19 @@ GET http://localhost:3000/users/3
 
 
 ###
+# const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTcyMjYyNjYyOCwiZXhwIjoxNzIyNjI2Njg4fQ.4555555555555555555555555555555555555555555555555555555555555555"
+
+###
+GET http://localhost:3000/users/
+Content-Type: application/json
+# Authorization: Bearer {{token}}
+
+{
+    "userId": 2
+}
+
+
+###
 POST  http://localhost:3000/auctions/updateimg
 Content-Type: application/json
 

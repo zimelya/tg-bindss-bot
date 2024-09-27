@@ -11,15 +11,15 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ZodValidationPipe } from 'src/common/pipe/validation.pipe';
-import { CreateUserDto, CreateUserSchema } from './users.dto';
+import { CreateUserDto, UserSchema } from './users.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
-  constructor(readonly userService: UsersService) {}
+  constructor(readonly userService: UsersService) { }
 
-  
+
   @Get()
   async findAll() {
     return await this.userService.findAll();
@@ -31,7 +31,7 @@ export class UsersController {
   }
 
   @Post()
-  @UsePipes(new ZodValidationPipe(CreateUserSchema))
+  @UsePipes(new ZodValidationPipe(UserSchema))
   async createUser(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
   }
@@ -39,13 +39,13 @@ export class UsersController {
   @Put(':id')
   async updateUser(
     @Param('id', ParseIntPipe) id: number,
-    @Body(new ZodValidationPipe(CreateUserSchema)) createUserDto: CreateUserDto,
+    @Body(new ZodValidationPipe(UserSchema)) createUserDto: CreateUserDto,
   ) {
     return await this.userService.update(id, createUserDto);
   }
 
   @Post()
-  async getUsersPermissions(){
+  async getUsersPermissions() {
     return await this.userService.getUserPermisions()
   }
 }

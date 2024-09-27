@@ -7,8 +7,9 @@ import { PermissionDto } from './permissions.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma: PrismaService) {}
-  findAll(): Promise<User[]> {
+
+  constructor(private prisma: PrismaService) { }
+  async findAll(): Promise<User[]> {
     return this.prisma.user.findMany()
   }
 
@@ -16,6 +17,14 @@ export class UsersService {
     return this.prisma.user.findUnique({
       where: {
         id,
+      },
+    })
+  }
+
+  async findByPhone(phone: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: {
+        phone,
       },
     })
   }
