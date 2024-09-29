@@ -1,6 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Post, Request, UseGuards, UsePipes } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './local-auth.guard';
 import { CreateUserDto, UserSchema } from 'src/users/users.dto';
 import { ZodValidationPipe } from 'src/common/pipe/validation.pipe';
 
@@ -11,10 +10,16 @@ export class AuthController {
   // @UseGuards(LocalAuthGuard)
 
 
-  @HttpCode(HttpStatus.OK)
-  @Post('login')
-  async login(@Body() userDto: { phone: string, pass: string }) {
+  // @HttpCode(HttpStatus.OK)
+  @Post('signIn')
+  async signIn(@Body() userDto: { phone: string, pass: string }) {
     return await this.authService.signIn(userDto)
+  }
+
+  @Post('register')
+  async register(@Body() userDto: CreateUserDto) {
+    console.log(userDto)
+    return await this.authService.register(userDto)
   }
 
   // @UseGuards(AuthGuard)

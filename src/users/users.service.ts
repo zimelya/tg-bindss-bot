@@ -30,8 +30,18 @@ export class UsersService {
   }
 
   async create(data: CreateUserDto): Promise<User> {
+
+    const newUser: CreateUserDto = data
+    const roleId = await this.prisma.userRole.findUnique({
+      where: { name: "GUEST" }
+    })
+
+    newUser['roleId'] = roleId.id
+
+    console.log('create user ', newUser)
+
     return this.prisma.user.create({
-      data,
+      data: newUser
     })
   }
 

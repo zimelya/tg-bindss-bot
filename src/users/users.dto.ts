@@ -8,6 +8,7 @@ export const UserSchema = z.object({
   phone: z.string().optional(),
   chatId: z.string(),
   password: z.string(),
+  roleId: z.number().optional(),
 });
 
 export type UserDto = z.infer<typeof UserSchema>;
@@ -16,6 +17,7 @@ export type CreateUserDto = z.infer<typeof UserSchema> & {
   chatId: string;
   phone: string;
   password: string;
+  roleId: number;
 };
 
 export type GetUserDto = z.infer<typeof UserSchema> & {
@@ -23,5 +25,6 @@ export type GetUserDto = z.infer<typeof UserSchema> & {
   phone: string;
   email: string;
   name: string;
+  roleId: number;
 };
 

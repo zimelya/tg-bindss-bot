@@ -1,8 +1,37 @@
+GET http://localhost:3000/
+
+
+
+###
+ var  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjo0LCJjaGF0SWQiOiIxMTEiLCJuYW1lIjoiQWRtaW4iLCJlbWFpbCI6bnVsbCwicGhvbmUiOiJxYXoiLCJpc0FjdGl2ZSI6dHJ1ZSwiY3JlYXRlZEF0IjoiMjAyNC0wOS0yOFQwMDo0OTozOC4wMDFaIiwidXBkYXRlZEF0IjoiMjAyNC0wOS0yOFQwMDo0OTozOC4wMDFaIiwicm9sZUlkIjozfSwic3ViIjo0LCJpYXQiOjE3Mjc0ODQ4NTQsImV4cCI6MTcyNzQ4ODQ1NH0.OGuxE8ynb0LCibqExbFioq03if20nJV9QaERRkRlBSI"
+
+
+
+###
 GET http://localhost:3000/users
 
 
 ###
-GET http://localhost:3000/users/3
+POST http://localhost:3000/auth/signIn
+Content-Type: application/json
+
+{
+    "phone": "qaz",
+    "password": "aezakmi"
+}
+
+###
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+    "name": "Joe Biden",
+    "phone": "1234567890",
+    "password": "1234567890",
+    "chatId": "123",
+    
+}
+
 
 
 ###
@@ -43,14 +72,23 @@ Content-Type: application/json
     "chatId": "1234567300"
 }
 
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "phone": "qaz",
+    "pass": "aezakmi"
+}
+
 ### 
-PUT http://localhost:3000/users/3
+POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
     "name": "Joe Biden",
-    "email": "afafaaf@gmail.com",
-    "chatId": "1234567890"
+    "phone": "1234567890",
+    "pass": "1234567890"
 }
 
 ###
@@ -60,7 +98,7 @@ GET http://localhost:3000/auctions
 GET http://localhost:3000/auctions/2
 
 ###
-POST http://localhost:3000/auctions
+POST http://localhost:3000/auctions/
 Content-Type: application/json
 
 {
