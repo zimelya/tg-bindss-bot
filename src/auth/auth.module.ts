@@ -7,9 +7,6 @@ import { PrismaService } from 'src/prisma.service';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
 import { UsersModule } from 'src/users/users.module';
-import { AuthRouter } from './auth.router';
-import { TrpcModule } from 'src/trpc/trpc.module';
-import { TrpcService } from 'src/trpc/trpc.service';
 
 
 @Module({
@@ -23,8 +20,8 @@ import { TrpcService } from 'src/trpc/trpc.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, PrismaService, JwtStrategy, AuthRouter, TrpcService],
-  exports: [AuthService, AuthRouter],
+  providers: [AuthService, PrismaService, JwtStrategy],
+  exports: [AuthService],
 })
 
 export class AuthModule { }

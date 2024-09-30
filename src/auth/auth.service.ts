@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto, UserDto } from 'src/users/users.dto';
 import { UsersService } from 'src/users/users.service';
 import { error } from 'console';
+import { jwtConstants } from './constants';
 
 
 @Injectable()
@@ -16,13 +17,18 @@ export class AuthService {
   ) { }
 
   async signIn({ phone, pass }: { phone: string, pass: string }): Promise<{ token: string }> {
+    console.log("Sign In", phone, pass)
     const user = await this.usersService.findByPhone(phone)
-
+    console.log("Sign In user", user)
     if (user && (await bcrypt.compare(pass, user.password))) {
-
+      console.log("Sign In compare", "true")
       const { password, ...result } = user
+
       const payload = { data: result, sub: result.id }
-      const token = await this.jwtService.signAsync(payload)
+      console.log("Sign In payload", payload)
+
+      const token = await this.jwtService.signAsync(payload, { secret: jwtConstants.secret })
+      console.log("Sign In token", token)
       return { token }
     } else {
       throw new UnauthorizedException()
